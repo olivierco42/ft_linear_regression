@@ -1,3 +1,5 @@
+import math
+
 def ft_average(lst: list) -> int:
 	x: int = 0
 	for element in lst:
@@ -25,5 +27,15 @@ def ft_normalisation(lst: list) -> list:
 	return list_normalisation
 
 def ft_sigma(lst: list) -> int:
+	x: int = 0
 	average: int = ft_average(lst)
+	standard_deviation = ft_standard_deviation(lst)
+	print("average", average)
+
+	for element in lst:
+		print(element)
+		x = element - average
+		print(x)
+		print()
+	print("z inverse", lst[0] * standard_deviation + average)
 	#standard_deviation: int = ft_standard_deviation(lst)

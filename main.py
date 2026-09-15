@@ -1,6 +1,6 @@
 import csv
 from modele import Modele
-from math_formula import ft_normalisation
+from math_formula import ft_normalisation, ft_sigma
 
 def ft_estimate_price(theta0: int, theta1: int, mileage: int) -> int:
 	return theta0 + (theta1 * mileage)
@@ -18,7 +18,8 @@ def save_data(iteration: int, theta0: int, theta1: int):
 
 def calculation(mileage_price_list: list):
 	modele = Modele(ft_normalisation(mileage_price_list[0]), ft_normalisation(mileage_price_list[1]))
-	print(modele.mileage_lst)
+	#print(modele.mileage_lst)
+	ft_sigma(mileage_price_list[0])
 
 	for x in range(modele.iteration):
 		for index, (price, mileage) in enumerate(zip(modele.price_lst, modele.mileage_lst)):
