@@ -1,4 +1,5 @@
 import csv
+from modele import Modele
 from math_formula import ft_normalisation
 
 def ft_estimate_price(theta0: int, theta1: int, mileage: int) -> int:
@@ -10,42 +11,31 @@ def save_data(iteration: int, theta0: int, theta1: int):
 					['theta0', theta0],
 					['theta1', theta1]]
 
-	#print(data_lst)
-
-	with open('test.csv', 'a', newline='') as csvfile:
+	with open('theta_result.csv', 'a', newline='') as csvfile:
 		writer = csv.writer(csvfile, delimiter=' ')
 		writer.writerows(data_lst)
 		writer.writerow([])
 
 def calculation(mileage_price_list: list):
-	theta0: int = 0
-	theta1: int = 0
-	iteration: int = 1000
-	learning_rate: int = 0.01
-	mileage_lst = ft_normalisation(mileage_price_list[0])
-	price_lst =  ft_normalisation(mileage_price_list[1])
-	theta0_tmp: float = 0
-	theta1_tmp = float = 0
+	modele = Modele(ft_normalisation(mileage_price_list[0]), ft_normalisation(mileage_price_list[1]))
+	print(modele.mileage_lst)
 
-	for x in range(iteration):
-		for index, (price, mileage) in enumerate(zip(price_lst, mileage_lst)):
-			estimate_price = ft_estimate_price(theta0, theta1, mileage)
+	for x in range(modele.iteration):
+		for index, (price, mileage) in enumerate(zip(modele.price_lst, modele.mileage_lst)):
+			estimate_price = ft_estimate_price(modele.theta0, modele.theta1, mileage)
 
-			theta0_tmp += (estimate_price - price)
+			modele.theta0_tmp += (estimate_price - price)
 
-			theta1_tmp += ((estimate_price - price) * mileage)
+			modele.theta1_tmp += ((estimate_price - price) * mileage)
 
-
-			if index == len(price_lst) - 1:
-				theta0 = learning_rate * (theta0_tmp / len(price_lst))
-				#print("theta0", theta0)
-				theta1 += -(learning_rate * (theta1_tmp / len(price_lst)))
-				#print("theta1", theta1)
-				theta0_tmp = 0
-				theta1_tmp = 0
-				save_data(x, theta0,theta1)
+			if index == len(modele.price_lst) - 1:
+				modele.theta0 = modele.learning_rate * (modele.theta0_tmp / len(modele.price_lst))
+				modele.theta1 += -(modele.learning_rate * (modele.theta1_tmp / len(modele.price_lst)))
+				modele.theta0_tmp = 0
+				modele.theta1_tmp = 0
+				save_data(x, modele.theta0,modele.theta1)
 				#print()
-	print("theta0", theta0, "  theta1", theta1)
+	print("theta0", modele.theta0, "  theta1", modele.theta1)
 
 def extract_data() -> list: #verif a faire liste vide, element egeuax
 	mileage_price_list = [], []

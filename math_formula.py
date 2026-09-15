@@ -23,4 +23,7 @@ def ft_normalisation(lst: list) -> list:
 		list_normalisation.append((element - average) / standard_deviation)
 
 	return list_normalisation
-	
+
+def ft_sigma(lst: list) -> int:
+	average: int = ft_average(lst)
+	#standard_deviation: int = ft_standard_deviation(lst)
